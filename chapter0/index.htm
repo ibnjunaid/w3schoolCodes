@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AngularJs</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <link rel="stylesheet" type ="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
+    <style>
+        input.ng-valid{
+            background-color:rgb(16, 129, 76);
+            color:white;
+        }
+        body{
+            background-color: burlywood;
+            border:3px dashed goldenrod;
+            padding:20px;
+        }
+    </style>
+</head>
+<body>
+    <div ng-app="myApp" ng-init="firstname='john';quantity=1;price=5;
+    names=[
+    {name:'Jani',country:'Norway'},
+    {name:'Hege',country:'Sweden'},
+    {name:'Kai',country:'Denmark'}
+    ];">
+        <div ng-controller = "serverCtrl">
+            <h1>{{post.posts[0].title}}</h1>
+            <p>{{post.comments[0].body}}</p>
+        </div>
+
+		<div ng-include="'https://tryit.w3schools.com/angular_include.php'"></div>
+		
+
+        <div ng-controller="tcAccept" >
+            <input type="checkbox" ng-click="clik($event)" checked>Check Me</input>
+            <button type="button" ng-disabled=" !isClicked">Next</button>
+        </div>
+
+
+        <p>
+            <input type="text" ng-model="firstname">
+        </p>
+        <p>
+            You wrote: {{firstname | uppercase}}
+        </p>
+        
+        <div ng-controller="priceController">
+            Quantity: <input type="number" ng-model="quantity">
+            Costs:    <input type="number" ng-model="price">
+            <p>Quantity : {{quantity}}</p>
+            <p>Price : {{price | currency : "INR"}}</p>
+
+            Total in dollar: {{ total() | currency : "INR" }}
+        </div>
+        <ul>
+            <li ng-repeat="x in names | orderBy:'name'">
+                {{x.name +' '+ x.country}}
+            </li>
+        </ul>
+        
+        <div ng-controller="myCtrl">
+            Name : <input ng-model="firstname">
+            <p> Your name is {{firstname.toUpperCase()}}</p>
+            <p> Your Lastname is {{lastname}}</p>
+        </div>
+
+        <form name ="myForm" >
+            Email :
+            <input type ="email" name ="myAddress" ng-model="text">
+            <span class="fas fa-exclamation-triangle" ng-show="myForm.myAddress.$error.email">Not a valid e-mail address</span>
+        </form>
+
+        <div ng-controller ="checkboxCtrl">
+            <select ng-model="selectedName">
+                <option ng-repeat ="x in names">
+                    {{x}}
+                </option>
+            </select>
+        </div>
+    </div>
+</body>
+    <script>
+        var app = angular.module("myApp",[]);
+        app.directive("myNewDirective",function(){
+            return {
+                restrict:'E',
+                replace: true,
+                template: "<h1> My new template </h1>"
+            };
+        });
+    </script>
+    <script src ="controller.js"></script>
+</html>
